@@ -1,18 +1,24 @@
-SRCDIR = src
-OBJDIR = obj
+SRC_DIR = src
+OBJ_DIR = obj
+INC_DIR = inc
+EXE_DIR = bin
 
-all: exec
+SRC = $(wildcard $(SRC_DIR)/*.c)
+OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+INC = $(wildcard $(INC_DIR)/*.h)
 
-exec: $(OBJDIR)/test.o $(OBJDIR)/sum.o
-	gcc -o exec $(OBJDIR)/test.o $(OBJDIR)/sum.o
+CC = gcc
+exec = exec
 
-$(OBJDIR)/test.o: $(SRCDIR)/test.c
-	gcc -o $(OBJDIR)/test.o -c $(SRCDIR)/test.c
+all: $(exec)
 
-$(OBJDIR)/sum.o: $(SRCDIR)/sum.c
-	gcc -o $(OBJDIR)/sum.o -c $(SRCDIR)/sum.c
+$(exec): $(OBJ)
+	$(CC) -o $(exec) $(OBJ)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -c $< -I$(INC_DIR) -o $@
 
 .PHONY: clean all
 
 clean:
-	@rm exec $(OBJDIR)/*.o
+	@rm exec $(OBJ_DIR)/*.o

@@ -1,0 +1,19 @@
+SRCDIR = src
+OBJDIR = obj
+INCDIR = inc
+
+all: exec
+
+exec: $(OBJDIR)/test.o $(OBJDIR)/sum.o
+	gcc -o exec $(OBJDIR)/test.o $(OBJDIR)/sum.o
+
+$(OBJDIR)/test.o: $(SRCDIR)/test.c $(INCDIR)/test.h
+	gcc -o $(OBJDIR)/test.o -c $(SRCDIR)/test.c -I$(INCDIR)/
+
+$(OBJDIR)/sum.o: $(SRCDIR)/sum.c
+	gcc -o $(OBJDIR)/sum.o -c $(SRCDIR)/sum.c
+
+.PHONY: clean all
+
+clean:
+	@rm exec $(OBJDIR)/*.o

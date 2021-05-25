@@ -1,6 +1,5 @@
 #include <stdio.h>
-
-int sum(int a, int b);
+#include "test.h"
 
 int main(void)
 {
