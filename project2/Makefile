@@ -1,15 +1,18 @@
+SRCDIR = src
+OBJDIR = obj
+
 all: exec
 
-exec: test.o sum.o
-	gcc -o exec test.c sum.c
+exec: $(OBJDIR)/test.o $(OBJDIR)/sum.o
+	gcc -o exec $(OBJDIR)/test.o $(OBJDIR)/sum.o
 
-test.o: test.c
-	gcc -c test.c
+$(OBJDIR)/test.o: $(SRCDIR)/test.c
+	gcc -o $(OBJDIR)/test.o -c $(SRCDIR)/test.c
 
-sum.o: sum.c
-	gcc -c sum.c
+$(OBJDIR)/sum.o: $(SRCDIR)/sum.c
+	gcc -o $(OBJDIR)/sum.o -c $(SRCDIR)/sum.c
 
-.PHONY: clean
+.PHONY: clean all
 
 clean:
-	rm exec *.o
+	@rm exec $(OBJDIR)/*.o
